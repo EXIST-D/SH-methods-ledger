@@ -1,0 +1,92 @@
+$ mw.py run --src project --out out --work <work>
+# Evidence brief (generated; every value below is written in a file, with its source)
+
+## Task
+- language: en | length hint: none
+- no task text found
+
+## Files read (7)
+- README.md [doc]: 6 facts
+- config.yaml [config]: 19 facts
+- requirements.txt [env]: 3 facts
+- results.csv [table]: 5 facts
+- run.sh [script]: 4 facts
+- train.py [code]: 13 facts
+- logs/train.log [log]: 25 facts
+
+## Parameters (resolved value, scope, status, sources)
+- data.name = LS-Tiles [general] single-source | config.yaml:4
+- data.version = v2.1 [general] single-source | config.yaml:5
+- image_size = 256 [general] single-source | config.yaml:8
+- model = resnet18 [general] single-source | config.yaml:20
+- num_workers = 4 [general] single-source | train.py:20
+- precision = True [general] settled by run log / command line (logs/train.log:1) | logs/train.log:1
+- seed = 42 [general] settled by run log / command line (logs/train.log:1) | README.md:2; config.yaml:2; logs/train.log:1
+- batch_size = 64 [test] consistent | config.yaml:18; run.sh:4
+- batch_size = 32 (config.yaml:11) | 16 (train.py:20) [train] CONFLICT | config.yaml:11; train.py:20
+- dropout = 0.2 (config.yaml:21) | 0.5 (train.py:22) [train] CONFLICT | config.yaml:21; train.py:22
+- epochs = 50 [train] settled by run log / command line (logs/train.log) | config.yaml:10; logs/train.log; logs/train.log:1
+- learning_rate = 0.001 [train] settled by run log / command line (logs/train.log:1) | config.yaml:13; logs/train.log:1; run.sh:3
+- optimizer = AdamW [train] consistent | config.yaml:12; train.py:19
+- scheduler = cosine [train] consistent | config.yaml:15; train.py:21
+- warmup = 500 [train] single-source | config.yaml:16
+- weight_decay = 0.01 (config.yaml:14) | 0.05 (train.py:19) [train] CONFLICT | config.yaml:14; train.py:19
+
+## Conflicts between sources (3 open; decide with `=== resolve`)
+- batch_size [train]: 32 @ config.yaml:11  vs  16 @ train.py:20 | a configuration file and a value fixed in code / notes disagree
+- weight_decay [train]: 0.01 @ config.yaml:14  vs  0.05 @ train.py:19 | a configuration file and a value fixed in code / notes disagree
+- dropout [train]: 0.2 @ config.yaml:21  vs  0.5 @ train.py:22 | a configuration file and a value fixed in code / notes disagree
+
+## Datasets and environment
+- dataset.size.tile = 10000 | README.md:2
+- dataset.size.region = 14 | README.md:2
+- dataset.split_ratio = 8:1:1 | README.md:2
+- data.name = LS-Tiles | config.yaml:4
+- data.version = v2.1 | config.yaml:5
+- data.root = /data/ls_tiles | config.yaml:6
+... (38 more lines; the full brief is out/brief.md)
+
+$ mw.py check <work> draft_v1.md
+draft: 9 sentences, 12 numbers (2 tied to a source) | issues: {'error': 16, 'warn': 10}
+  error condition_mixup            D001 batch size 64 is the test value (run.sh:4) but the sentence describes train, where the sources say 32 (config.yaml:11)
+  error condition_mixup            D004 batch size 32 is the train value (config.yaml:11) but the sentence describes test, where the sources say 64 (config.yaml:18)
+  error placeholder_left           D007 unfinished placeholder in the text (XX): fill it from a source or mark it [[CONFIRM: what is needed]]
+  error unsourced_number           D002 12,000 is not found in any source (config, code, log, table, note): it may have been added for the sake of the prose - context: "We use LS-Tiles v2.0, which contains 12,000 tiles."
+  error unsourced_number           D003 split ratio 7:2:1  is not given by any source (dataset split, sizes)
+  error unsourced_number           D006 0.85 is not found in any source (config, code, log, table, note): it may have been added for the sake of the prose - context: "LiteSlide reaches an F1 of 0.85 and an accuracy of 87.1%, against 0.771 for Base"
+  error value_mismatch             D001 the text says epochs 100 but the sources say 40 @ train.py:9; 50 @ config.yaml:10; 50 @ logs/train.log; 50 @ logs/train.log:1
+  error value_mismatch             D001 the text says learning rate 0.01 but the sources say 0.0003 @ train.py:10; 0.001 @ config.yaml:13; 0.001 @ logs/train.log:1; 0.001 @ run.sh:3
+  error value_mismatch             D001 the text says seed 7 but the sources say 0 @ train.py:18; 1 @ train.py:11; 42 @ README.md:2; 42 @ config.yaml:2
+  error value_mismatch             D001 the text says num gpus 8 but the sources say 4 @ README.md:3; 4 @ logs/train.log:3
+  error value_mismatch             D001 the text says the optimizer is Adam but the sources say AdamW @ config.yaml:12, AdamW @ train.py:19
+  error value_mismatch             D001 the text says PyTorch 2.0 but the sources say 2.1.0
+  error value_mismatch             D001 the text says Python 3.8 but the sources say 3.10.12
+  error value_mismatch             D001 the text says the GPU is NVIDIA V100 but the sources say NVIDIA A100 @ README.md:3, NVIDIA A100-SXM4-40GB @ logs/train.log:3
+  error value_mismatch             D002 the text says dataset version 2.0 but the sources say v2.1
+  error value_mismatch             D005 the text says image size 224 but the sources say 256 @ config.yaml:8
+  warn  gap_not_marked             number of repeated runs / folds (or a statement that there was one run) is nowhere in the materials and the text does not flag it: add [[CONFIRM: number of repeated runs / folds]] where it belongs
+  warn  gap_not_marked             statistics (mean ± std, number of runs, significance test) is nowhere in the materials and the text does not flag it: add [[CONFIRM: statistics]] where it belongs
+  warn  gap_not_marked             code version (commit / tag) is nowhere in the materials and the text does not flag it: add [[CONFIRM: code version]] where it belongs
+  warn  gap_not_marked             how to obtain the data is nowhere in the materials and the text does not flag it: add [[CONFIRM: how to obtain the data]] where it belongs
+  warn  generic_limitation         D008 generic limitation ("The method may not generalize to other regions."): tie it to a failure scenario (input type, size, range, setting not tested)
+  warn  generic_limitation         D009 generic limitation ("Further research is needed."): tie it to a failure scenario (input type, size, range, setting not tested)
+  warn  open_conflict              sources disagree on batch_size [train]: 32 @ config.yaml:11  vs  16 @ train.py:20
+  warn  open_conflict              sources disagree on weight_decay [train]: 0.01 @ config.yaml:14  vs  0.05 @ train.py:19
+  warn  open_conflict              sources disagree on dropout [train]: 0.2 @ config.yaml:21  vs  0.5 @ train.py:22
+  warn  unverified_comparability   D006 claims the comparison is fair / same budget: no source documents the baselines' budget; confirm with the author (`=== confirm baseline_budget` with a quote) or soften it
+elements: {'covered': 14, 'unknown_from_material': 4}
+Fix the errors (a number without a source is removed or asked for, never kept for the sake of the prose), then `check` again.
+
+
+$ mw.py check <work> draft.md
+draft: 13 sentences, 21 numbers (21 tied to a source) | issues: {'info': 8, 'warn': 3}
+  warn  open_conflict              sources disagree on batch_size [train]: 32 @ config.yaml:11  vs  16 @ train.py:20
+  warn  open_conflict              sources disagree on weight_decay [train]: 0.01 @ config.yaml:14  vs  0.05 @ train.py:19
+  warn  open_conflict              sources disagree on dropout [train]: 0.2 @ config.yaml:21  vs  0.5 @ train.py:22
+elements: {'covered': 14, 'unknown_from_material': 4}
+
+
+$ mw.py build <work> draft.md --out out
+{"written": "out", "status": "partial", "numbers": 21, "numbers_tied_to_a_source": 21, "issues": {"info": 8, "warn": 3}, "open_conflicts": 3, "questions": 15, "unfilled_contract_fields": [], "contract_found": false}
+
+

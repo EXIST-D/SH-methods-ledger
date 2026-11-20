@@ -1,0 +1,43 @@
+$ mw.py run --case case.json --out out --work <work>
+# Evidence brief (generated; every value below is written in a file, with its source)
+
+## Task
+- language: zh | length hint: 300
+```
+请根据材料撰写论文的“方法与实验设置”章节，使用中文，约300字，不要补充材料中没有的数值；材料缺失的信息请明确标出交作者确认。
+```
+
+## Files read (1)
+- draft.md [draft (existing section: its numbers are checked, not used as evidence)]: 0 facts
+
+## Parameters (resolved value, scope, status, sources)
+- seed = 42 [general] single-source | case.json#lab_notes:1
+- batch_size = 64 [test] single-source | case.json#lab_notes:1
+- batch_size = 32 [train] single-source | case.json#lab_notes:1
+- dropout = 0.2 [train] single-source | case.json#settings:1
+- epochs = 50 [train] single-source | case.json#settings:1
+- learning_rate = 0.001 [train] consistent | case.json#lab_notes:1; case.json#settings:1
+- optimizer = AdamW [train] consistent | case.json#lab_notes:1; case.json#settings:1
+- weight_decay = 0.01 [train] single-source | case.json#settings:1
+
+## Conflicts between sources (0 open; decide with `=== resolve`)
+
+## Datasets and environment
+- dataset.name = LS-Tiles | case.json#lab_notes:1
+- dataset.size.item = 10000 | case.json#lab_notes:1
+- dataset.split_ratio = 8:1:1 | case.json#lab_notes:1
+- env.pytorch = 2.1.0 | case.json#lab_notes:1
+- hardware.gpu = NVIDIA A100 | case.json#lab_notes:1
+- hardware.num_gpus = 4 | case.json#lab_notes:1
+... (25 more lines; the full brief is out/brief.md)
+
+$ mw.py check <work> draft.md
+draft: 8 sentences, 12 numbers (12 tied to a source) | issues: {'info': 6, 'warn': 1}
+  warn  length                     the section has about 200 characters; the task asks for about 300
+elements: {'covered': 11, 'unknown_from_material': 7}
+
+
+$ mw.py build <work> draft.md --out out
+{"written": "out", "status": "success", "numbers": 12, "numbers_tied_to_a_source": 12, "issues": {"info": 6, "warn": 1}, "open_conflicts": 0, "questions": 13, "unfilled_contract_fields": [], "contract_found": false}
+
+

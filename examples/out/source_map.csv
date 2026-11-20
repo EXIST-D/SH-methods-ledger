@@ -1,0 +1,22 @@
+sentence,number,kind,status,sources
+D001,50,epochs,sourced,config.yaml:10; run.sh:3; logs/train.log:1
+D001,1e-3,learning_rate,sourced,config.yaml:13; run.sh:3; logs/train.log:1
+D001,0.01,weight_decay,sourced (conflicted),config.yaml:14
+D001,500,warmup,sourced,config.yaml:16
+D001,32,batch_size,sourced,config.yaml:11
+D002,64,batch_size,sourced,config.yaml:18; run.sh:4
+D003,42,seed,sourced,README.md:2; config.yaml:2; run.sh:3
+D004,4,num_gpus,sourced,README.md:3; logs/train.log:3
+D006,256,image_size,sourced,config.yaml:8
+D007,8:1:1 ,split ratio,sourced,README.md:2
+D007,"10,000",dataset.size.tile,sourced,README.md:2
+D007,14,dataset.size.region,sourced,README.md:2
+D007,"8,000",dataset.size.train,sourced,logs/train.log:4
+D007,"1,000",dataset.size.val,sourced,logs/train.log:4; logs/train.log:4
+D007,"1,000",dataset.size.val,sourced,logs/train.log:4; logs/train.log:4
+D008,0.812,test_f1,sourced,results.csv:2; logs/train.log:9
+D008,4.1,params_M,sourced,results.csv:2
+D008,0.771,F1,sourced,results.csv:3
+D008,11.2,params_M,sourced,results.csv:3
+D009,0.871,test_accuracy,sourced,logs/train.log:8
+D013,14,dataset.size.region,sourced,README.md:2

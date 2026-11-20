@@ -1,0 +1,13 @@
+sentence,number,kind,status,sources
+D001,8:1:1 ,split ratio,sourced,case.json#lab_notes:1
+D001,10000,dataset.size.item,sourced,case.json#lab_notes:1
+D001,42,seed,sourced,case.json#lab_notes:1
+D002,0.001,learning_rate,sourced,case.json#lab_notes:1; case.json#settings:1
+D002,0.01,weight_decay,sourced,case.json#settings:1
+D002,32,batch_size,sourced,case.json#lab_notes:1
+D002,50,epochs,sourced,case.json#settings:1
+D002,64,batch_size,sourced,case.json#lab_notes:1
+D003,4,num_gpus,sourced,case.json#lab_notes:1
+D005,0.812,f1,sourced,case.json#lab_notes:1
+D005,0.871,准确率,sourced,case.json#lab_notes:1
+D005,0.771,f1,sourced,case.json#lab_notes:1

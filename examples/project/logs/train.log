@@ -1,0 +1,9 @@
+2024-05-02 10:11:03 INFO Namespace(config='config.yaml', epochs=50, lr=0.001, seed=42, amp=True)
+2024-05-02 10:11:04 INFO PyTorch 2.1.0, CUDA 12.1, Python 3.10.12
+2024-05-02 10:11:05 INFO GPU: NVIDIA A100-SXM4-40GB x 4
+2024-05-02 10:11:06 INFO train: 8000 samples, val: 1000 samples, test: 1000 samples
+Epoch 1/50 - loss: 0.912 - val acc: 0.61 - lr: 0.001
+Epoch 25/50 - loss: 0.311 - val acc: 0.84 - lr: 0.0005
+Epoch 50/50 - loss: 0.201 - val acc: 0.88 - lr: 0.00001
+Test accuracy: 0.871
+Test F1: 0.812

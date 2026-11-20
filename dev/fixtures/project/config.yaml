@@ -1,0 +1,21 @@
+# LiteSlide training config
+seed: 42
+data:
+  name: LS-Tiles
+  version: v2.1
+  root: /data/ls_tiles
+  split: [0.8, 0.1, 0.1]
+  image_size: 256
+train:
+  epochs: 50
+  batch_size: 32
+  optimizer: AdamW
+  lr: 1e-3
+  weight_decay: 0.01
+  scheduler: cosine
+  warmup_steps: 500
+eval:
+  batch_size: 64
+model:
+  backbone: resnet18
+  dropout: 0.2

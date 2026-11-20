@@ -1,0 +1,1051 @@
+{
+ "case_id": null,
+ "status": "partial",
+ "manuscript": {
+  "files": [
+   "section.md",
+   "section.docx",
+   "section.tex"
+  ],
+  "text": "## Experimental setup\n\nLiteSlide was trained for 50 epochs with AdamW (learning rate 1e-3, weight decay 0.01 [[CONFIRM: weight decay - 0.01 in config.yaml, 0.05 hard-coded in the AdamW call of train.py]], cosine schedule with 500 warm-up steps) and a batch size of 32 [[CONFIRM: training batch size - config.yaml says 32, the DataLoader call in train.py says 16]]. Evaluation used a batch size of 64. The random seed was 42. Experiments ran on 4 NVIDIA A100-SXM4-40GB GPUs with PyTorch 2.1.0, CUDA 12.1 and Python 3.10.12. The backbone is resnet18 with dropout [[CONFIRM: dropout - 0.2 in config.yaml, 0.5 in train.py]]. Each image is resized to 256 pixels.\n\n## Dataset\n\nWe use LS-Tiles v2.1, which contains 10,000 labelled tiles from 14 regions, split 8:1:1 at random into 8,000 training, 1,000 validation and 1,000 test tiles [[CONFIRM: how the split was drawn]].\n\n## Baselines and evaluation\n\nOn the test set LiteSlide reaches an F1 of 0.812 with 4.1 million parameters, against 0.771 for BaselineA (11.2 million parameters). Test accuracy is 0.871. [[CONFIRM: baseline budget and training settings]] [[CONFIRM: number of repeated runs and statistics (mean and std)]]\n\n## Reproducibility\n\nRun `python train.py --config config.yaml --epochs 50 --lr 0.001 --seed 42`, then `python eval.py --ckpt best.pt --batch-size 64`. [[CONFIRM: code version (commit)]] [[CONFIRM: how to obtain LS-Tiles]]\n\n## Limitations\n\nThe model was tested only on Sentinel imagery; when the target region lies outside the 14 training regions, F1 can drop (not measured here).\n",
+  "word_count": 266
+ },
+ "sources": {
+  "numbers": [
+   {
+    "sentence": "D001",
+    "token": "50",
+    "status": "sourced",
+    "sources": [
+     "config.yaml:10",
+     "run.sh:3",
+     "logs/train.log:1"
+    ],
+    "kind": "epochs"
+   },
+   {
+    "sentence": "D001",
+    "token": "1e-3",
+    "status": "sourced",
+    "sources": [
+     "config.yaml:13",
+     "run.sh:3",
+     "logs/train.log:1"
+    ],
+    "kind": "learning_rate"
+   },
+   {
+    "sentence": "D001",
+    "token": "0.01",
+    "status": "sourced (conflicted)",
+    "sources": [
+     "config.yaml:14"
+    ],
+    "kind": "weight_decay"
+   },
+   {
+    "sentence": "D001",
+    "token": "500",
+    "status": "sourced",
+    "sources": [
+     "config.yaml:16"
+    ],
+    "kind": "warmup"
+   },
+   {
+    "sentence": "D001",
+    "token": "32",
+    "status": "sourced",
+    "sources": [
+     "config.yaml:11"
+    ],
+    "kind": "batch_size"
+   },
+   {
+    "sentence": "D002",
+    "token": "64",
+    "status": "sourced",
+    "sources": [
+     "config.yaml:18",
+     "run.sh:4"
+    ],
+    "kind": "batch_size"
+   },
+   {
+    "sentence": "D003",
+    "token": "42",
+    "status": "sourced",
+    "sources": [
+     "README.md:2",
+     "config.yaml:2",
+     "run.sh:3"
+    ],
+    "kind": "seed"
+   },
+   {
+    "sentence": "D004",
+    "token": "4",
+    "status": "sourced",
+    "sources": [
+     "README.md:3",
+     "logs/train.log:3"
+    ],
+    "kind": "num_gpus"
+   },
+   {
+    "sentence": "D006",
+    "token": "256",
+    "status": "sourced",
+    "sources": [
+     "config.yaml:8"
+    ],
+    "kind": "image_size"
+   },
+   {
+    "sentence": "D007",
+    "token": "8:1:1 ",
+    "status": "sourced",
+    "sources": [
+     "README.md:2"
+    ],
+    "kind": "split ratio"
+   },
+   {
+    "sentence": "D007",
+    "token": "10,000",
+    "status": "sourced",
+    "sources": [
+     "README.md:2"
+    ],
+    "kind": "dataset.size.tile"
+   },
+   {
+    "sentence": "D007",
+    "token": "14",
+    "status": "sourced",
+    "sources": [
+     "README.md:2"
+    ],
+    "kind": "dataset.size.region"
+   },
+   {
+    "sentence": "D007",
+    "token": "8,000",
+    "status": "sourced",
+    "sources": [
+     "logs/train.log:4"
+    ],
+    "kind": "dataset.size.train"
+   },
+   {
+    "sentence": "D007",
+    "token": "1,000",
+    "status": "sourced",
+    "sources": [
+     "logs/train.log:4",
+     "logs/train.log:4"
+    ],
+    "kind": "dataset.size.val"
+   },
+   {
+    "sentence": "D007",
+    "token": "1,000",
+    "status": "sourced",
+    "sources": [
+     "logs/train.log:4",
+     "logs/train.log:4"
+    ],
+    "kind": "dataset.size.val"
+   },
+   {
+    "sentence": "D008",
+    "token": "0.812",
+    "status": "sourced",
+    "sources": [
+     "results.csv:2",
+     "logs/train.log:9"
+    ],
+    "kind": "test_f1"
+   },
+   {
+    "sentence": "D008",
+    "token": "4.1",
+    "status": "sourced",
+    "sources": [
+     "results.csv:2"
+    ],
+    "kind": "params_M"
+   },
+   {
+    "sentence": "D008",
+    "token": "0.771",
+    "status": "sourced",
+    "sources": [
+     "results.csv:3"
+    ],
+    "kind": "F1"
+   },
+   {
+    "sentence": "D008",
+    "token": "11.2",
+    "status": "sourced",
+    "sources": [
+     "results.csv:3"
+    ],
+    "kind": "params_M"
+   },
+   {
+    "sentence": "D009",
+    "token": "0.871",
+    "status": "sourced",
+    "sources": [
+     "logs/train.log:8"
+    ],
+    "kind": "test_accuracy"
+   },
+   {
+    "sentence": "D013",
+    "token": "14",
+    "status": "sourced",
+    "sources": [
+     "README.md:2"
+    ],
+    "kind": "dataset.size.region"
+   }
+  ],
+  "parameters": [
+   {
+    "name": "data.name",
+    "value": "LS-Tiles",
+    "scope": "general",
+    "sources": [
+     "config.yaml:4"
+    ],
+    "status": "single-source",
+    "kinds": [
+     "config"
+    ],
+    "facts": [
+     "F008"
+    ],
+    "canon": ""
+   },
+   {
+    "name": "data.version",
+    "value": "v2.1",
+    "scope": "general",
+    "sources": [
+     "config.yaml:5"
+    ],
+    "status": "single-source",
+    "kinds": [
+     "config"
+    ],
+    "facts": [
+     "F009"
+    ],
+    "canon": ""
+   },
+   {
+    "name": "image_size",
+    "value": 256,
+    "scope": "general",
+    "sources": [
+     "config.yaml:8"
+    ],
+    "status": "single-source",
+    "kinds": [
+     "config"
+    ],
+    "facts": [
+     "F015"
+    ],
+    "canon": "image_size"
+   },
+   {
+    "name": "model",
+    "value": "resnet18",
+    "scope": "general",
+    "sources": [
+     "config.yaml:20"
+    ],
+    "status": "single-source",
+    "kinds": [
+     "config"
+    ],
+    "facts": [
+     "F024"
+    ],
+    "canon": "model"
+   },
+   {
+    "name": "num_workers",
+    "value": 4,
+    "scope": "general",
+    "sources": [
+     "train.py:20"
+    ],
+    "status": "single-source",
+    "kinds": [
+     "call"
+    ],
+    "facts": [
+     "F048"
+    ],
+    "canon": "num_workers"
+   },
+   {
+    "name": "precision",
+    "value": true,
+    "scope": "general",
+    "sources": [
+     "logs/train.log:1"
+    ],
+    "status": "settled by run log / command line (logs/train.log:1)",
+    "kinds": [
+     "log"
+    ],
+    "facts": [
+     "F055"
+    ],
+    "canon": "precision",
+    "others": [
+     "False @ train.py:12 (overridden default)"
+    ]
+   },
+   {
+    "name": "seed",
+    "value": 42,
+    "scope": "general",
+    "sources": [
+     "README.md:2",
+     "config.yaml:2",
+     "logs/train.log:1",
+     "run.sh:3"
+    ],
+    "status": "settled by run log / command line (logs/train.log:1)",
+    "kinds": [
+     "cli",
+     "config",
+     "doc",
+     "log"
+    ],
+    "facts": [
+     "F003",
+     "F007",
+     "F036",
+     "F054"
+    ],
+    "canon": "seed",
+    "others": [
+     "1 @ train.py:11 (overridden default)",
+     "0 @ train.py:18 (overridden default)"
+    ]
+   },
+   {
+    "name": "batch_size",
+    "value": 64,
+    "scope": "test",
+    "sources": [
+     "config.yaml:18",
+     "run.sh:4"
+    ],
+    "status": "consistent",
+    "kinds": [
+     "cli",
+     "config"
+    ],
+    "facts": [
+     "F023",
+     "F037"
+    ],
+    "canon": "batch_size"
+   },
+   {
+    "name": "batch_size",
+    "value": "32 (config.yaml:11) | 16 (train.py:20)",
+    "scope": "train",
+    "sources": [
+     "config.yaml:11",
+     "train.py:20"
+    ],
+    "status": "CONFLICT",
+    "kinds": [
+     "call",
+     "config"
+    ],
+    "facts": [
+     "F017",
+     "F046"
+    ],
+    "canon": "batch_size"
+   },
+   {
+    "name": "dropout",
+    "value": "0.2 (config.yaml:21) | 0.5 (train.py:22)",
+    "scope": "train",
+    "sources": [
+     "config.yaml:21",
+     "train.py:22"
+    ],
+    "status": "CONFLICT",
+    "kinds": [
+     "call",
+     "config"
+    ],
+    "facts": [
+     "F025",
+     "F050"
+    ],
+    "canon": "dropout"
+   },
+   {
+    "name": "epochs",
+    "value": 50,
+    "scope": "train",
+    "sources": [
+     "config.yaml:10",
+     "logs/train.log",
+     "logs/train.log:1",
+     "run.sh:3"
+    ],
+    "status": "settled by run log / command line (logs/train.log)",
+    "kinds": [
+     "cli",
+     "config",
+     "log"
+    ],
+    "facts": [
+     "F016",
+     "F034",
+     "F052",
+     "F065"
+    ],
+    "canon": "epochs",
+    "others": [
+     "40 @ train.py:9 (overridden default)"
+    ]
+   },
+   {
+    "name": "learning_rate",
+    "value": 0.001,
+    "scope": "train",
+    "sources": [
+     "config.yaml:13",
+     "logs/train.log:1",
+     "run.sh:3"
+    ],
+    "status": "settled by run log / command line (logs/train.log:1)",
+    "kinds": [
+     "cli",
+     "config",
+     "log"
+    ],
+    "facts": [
+     "F019",
+     "F035",
+     "F053"
+    ],
+    "canon": "learning_rate",
+    "others": [
+     "0.0003 @ train.py:10 (overridden default)"
+    ]
+   },
+   {
+    "name": "optimizer",
+    "value": "AdamW",
+    "scope": "train",
+    "sources": [
+     "config.yaml:12",
+     "train.py:19"
+    ],
+    "status": "consistent",
+    "kinds": [
+     "call",
+     "config"
+    ],
+    "facts": [
+     "F018",
+     "F044"
+    ],
+    "canon": "optimizer"
+   },
+   {
+    "name": "scheduler",
+    "value": "cosine",
+    "scope": "train",
+    "sources": [
+     "config.yaml:15",
+     "train.py:21"
+    ],
+    "status": "consistent",
+    "kinds": [
+     "call",
+     "config"
+    ],
+    "facts": [
+     "F021",
+     "F049"
+    ],
+    "canon": "scheduler"
+   },
+   {
+    "name": "warmup",
+    "value": 500,
+    "scope": "train",
+    "sources": [
+     "config.yaml:16"
+    ],
+    "status": "single-source",
+    "kinds": [
+     "config"
+    ],
+    "facts": [
+     "F022"
+    ],
+    "canon": "warmup"
+   },
+   {
+    "name": "weight_decay",
+    "value": "0.01 (config.yaml:14) | 0.05 (train.py:19)",
+    "scope": "train",
+    "sources": [
+     "config.yaml:14",
+     "train.py:19"
+    ],
+    "status": "CONFLICT",
+    "kinds": [
+     "call",
+     "config"
+    ],
+    "facts": [
+     "F020",
+     "F045"
+    ],
+    "canon": "weight_decay"
+   }
+  ],
+  "elements": [
+   {
+    "id": "setup.seed",
+    "category": "setup",
+    "label": "random seed(s)",
+    "material": [
+     "F003",
+     "F007",
+     "F036",
+     "F041",
+     "F043",
+     "F054"
+    ],
+    "text": true,
+    "status": "covered"
+   },
+   {
+    "id": "setup.repeats",
+    "category": "setup",
+    "label": "number of repeated runs / folds (or a statement that there was one run)",
+    "material": [],
+    "text": false,
+    "status": "unknown_from_material"
+   },
+   {
+    "id": "setup.epochs",
+    "category": "setup",
+    "label": "training length (epochs / steps)",
+    "material": [
+     "F016",
+     "F034",
+     "F039",
+     "F052",
+     "F065"
+    ],
+    "text": true,
+    "status": "covered"
+   },
+   {
+    "id": "setup.batch_size",
+    "category": "setup",
+    "label": "batch size",
+    "material": [
+     "F017",
+     "F023",
+     "F037",
+     "F046"
+    ],
+    "text": true,
+    "status": "covered"
+   },
+   {
+    "id": "setup.optimizer",
+    "category": "setup",
+    "label": "optimizer",
+    "material": [
+     "F018",
+     "F044"
+    ],
+    "text": true,
+    "status": "covered"
+   },
+   {
+    "id": "setup.learning_rate",
+    "category": "setup",
+    "label": "learning rate (and schedule)",
+    "material": [
+     "F019",
+     "F035",
+     "F040",
+     "F053"
+    ],
+    "text": true,
+    "status": "covered"
+   },
+   {
+    "id": "setup.hardware",
+    "category": "setup",
+    "label": "hardware (GPU / CPU model and count)",
+    "material": [
+     "F005",
+     "F006",
+     "F059",
+     "F060"
+    ],
+    "text": true,
+    "status": "covered"
+   },
+   {
+    "id": "setup.software",
+    "category": "setup",
+    "label": "software versions (framework, CUDA, Python)",
+    "material": [
+     "F026",
+     "F027",
+     "F028",
+     "F056",
+     "F057",
+     "F058"
+    ],
+    "text": true,
+    "status": "covered"
+   },
+   {
+    "id": "data.name",
+    "category": "dataset",
+    "label": "dataset name",
+    "material": [
+     "F008"
+    ],
+    "text": true,
+    "status": "covered"
+   },
+   {
+    "id": "data.version",
+    "category": "dataset",
+    "label": "dataset version",
+    "material": [
+     "F009"
+    ],
+    "text": true,
+    "status": "covered"
+   },
+   {
+    "id": "data.size",
+    "category": "dataset",
+    "label": "dataset size (total and per split)",
+    "material": [
+     "F001",
+     "F002",
+     "F061",
+     "F062",
+     "F063"
+    ],
+    "text": true,
+    "status": "covered"
+   },
+   {
+    "id": "data.split",
+    "category": "dataset",
+    "label": "split proportions or sizes and how the split was drawn",
+    "material": [
+     "F004",
+     "F011",
+     "F012",
+     "F013",
+     "F014"
+    ],
+    "text": true,
+    "status": "covered"
+   },
+   {
+    "id": "data.preprocessing",
+    "category": "dataset",
+    "label": "preprocessing / augmentation",
+    "material": [
+     "F015"
+    ],
+    "text": true,
+    "status": "covered"
+   },
+   {
+    "id": "baseline.metrics",
+    "category": "baseline",
+    "label": "evaluation metrics and their values",
+    "material": [
+     "F029",
+     "F030",
+     "F031",
+     "F032",
+     "F068",
+     "F069"
+    ],
+    "text": true,
+    "status": "covered"
+   },
+   {
+    "id": "baseline.statistics",
+    "category": "baseline",
+    "label": "statistics (mean ± std, number of runs, significance test)",
+    "material": [],
+    "text": false,
+    "status": "unknown_from_material"
+   },
+   {
+    "id": "repro.code_version",
+    "category": "repro",
+    "label": "code version (commit / tag)",
+    "material": [],
+    "text": false,
+    "status": "unknown_from_material"
+   },
+   {
+    "id": "repro.commands",
+    "category": "repro",
+    "label": "commands to reproduce",
+    "material": [
+     "run.sh:3",
+     "run.sh:4"
+    ],
+    "text": true,
+    "status": "covered"
+   },
+   {
+    "id": "repro.data_access",
+    "category": "repro",
+    "label": "how to obtain the data",
+    "material": [],
+    "text": false,
+    "status": "unknown_from_material"
+   }
+  ],
+  "environment": [
+   {
+    "item": "hardware.gpu",
+    "value": "NVIDIA A100",
+    "source": "README.md:3",
+    "kind": "env",
+    "id": "F005"
+   },
+   {
+    "item": "hardware.num_gpus",
+    "value": 4,
+    "source": "README.md:3",
+    "kind": "env",
+    "id": "F006"
+   },
+   {
+    "item": "env.torch",
+    "value": "2.1.0",
+    "source": "requirements.txt:1",
+    "kind": "env",
+    "id": "F026"
+   },
+   {
+    "item": "env.numpy",
+    "value": "1.26.4",
+    "source": "requirements.txt:2",
+    "kind": "env",
+    "id": "F027"
+   },
+   {
+    "item": "env.scikit-learn",
+    "value": ">=1.3",
+    "source": "requirements.txt:3",
+    "kind": "env",
+    "id": "F028"
+   },
+   {
+    "item": "env.pytorch",
+    "value": "2.1.0",
+    "source": "logs/train.log:2",
+    "kind": "env",
+    "id": "F056"
+   },
+   {
+    "item": "env.cuda",
+    "value": "12.1",
+    "source": "logs/train.log:2",
+    "kind": "env",
+    "id": "F057"
+   },
+   {
+    "item": "env.python",
+    "value": "3.10.12",
+    "source": "logs/train.log:2",
+    "kind": "env",
+    "id": "F058"
+   },
+   {
+    "item": "hardware.gpu",
+    "value": "NVIDIA A100-SXM4-40GB",
+    "source": "logs/train.log:3",
+    "kind": "env",
+    "id": "F059"
+   }
+  ]
+ },
+ "boundaries": {
+  "questions_for_author": [
+   {
+    "kind": "conflict",
+    "item": "batch_size",
+    "question": "Which value is right for batch_size [train]? 32 in config.yaml:11  vs  16 in train.py:20. (a configuration file and a value fixed in code / notes disagree)"
+   },
+   {
+    "kind": "conflict",
+    "item": "weight_decay",
+    "question": "Which value is right for weight_decay [train]? 0.01 in config.yaml:14  vs  0.05 in train.py:19. (a configuration file and a value fixed in code / notes disagree)"
+   },
+   {
+    "kind": "conflict",
+    "item": "dropout",
+    "question": "Which value is right for dropout [train]? 0.2 in config.yaml:21  vs  0.5 in train.py:22. (a configuration file and a value fixed in code / notes disagree)"
+   },
+   {
+    "kind": "missing",
+    "item": "setup.repeats",
+    "question": "How many independent runs / folds were done, or was it a single run? Results reported as mean ± std need the count."
+   },
+   {
+    "kind": "missing",
+    "item": "baseline.statistics",
+    "question": "Were results averaged over runs? Please give mean ± std, the number of runs and any significance test."
+   },
+   {
+    "kind": "missing",
+    "item": "repro.code_version",
+    "question": "Which code version (git commit hash or release tag) produced the results?"
+   },
+   {
+    "kind": "missing",
+    "item": "repro.data_access",
+    "question": "Where can the data be obtained (URL, DOI, access conditions)?"
+   },
+   {
+    "kind": "marked_in_text",
+    "item": "weight decay - 0.01 in config.yaml, 0.05 hard-coded in the AdamW call of train.py",
+    "question": "weight decay - 0.01 in config.yaml, 0.05 hard-coded in the AdamW call of train.py"
+   },
+   {
+    "kind": "marked_in_text",
+    "item": "training batch size - config.yaml says 32, the DataLoader call in train.py says 16",
+    "question": "training batch size - config.yaml says 32, the DataLoader call in train.py says 16"
+   },
+   {
+    "kind": "marked_in_text",
+    "item": "dropout - 0.2 in config.yaml, 0.5 in train.py",
+    "question": "dropout - 0.2 in config.yaml, 0.5 in train.py"
+   },
+   {
+    "kind": "marked_in_text",
+    "item": "how the split was drawn",
+    "question": "how the split was drawn"
+   },
+   {
+    "kind": "marked_in_text",
+    "item": "baseline budget and training settings",
+    "question": "baseline budget and training settings"
+   },
+   {
+    "kind": "marked_in_text",
+    "item": "number of repeated runs and statistics (mean and std)",
+    "question": "number of repeated runs and statistics (mean and std)"
+   },
+   {
+    "kind": "marked_in_text",
+    "item": "code version (commit)",
+    "question": "code version (commit)"
+   },
+   {
+    "kind": "marked_in_text",
+    "item": "how to obtain LS-Tiles",
+    "question": "how to obtain LS-Tiles"
+   }
+  ],
+  "open_issues": [
+   {
+    "code": "open_conflict",
+    "severity": "warn",
+    "sentence": null,
+    "message": "sources disagree on batch_size [train]: 32 @ config.yaml:11  vs  16 @ train.py:20"
+   },
+   {
+    "code": "open_conflict",
+    "severity": "warn",
+    "sentence": null,
+    "message": "sources disagree on weight_decay [train]: 0.01 @ config.yaml:14  vs  0.05 @ train.py:19"
+   },
+   {
+    "code": "open_conflict",
+    "severity": "warn",
+    "sentence": null,
+    "message": "sources disagree on dropout [train]: 0.2 @ config.yaml:21  vs  0.5 @ train.py:22"
+   }
+  ],
+  "conflicts": [
+   {
+    "canon": "batch_size",
+    "scope": "train",
+    "values": [
+     {
+      "value": 32,
+      "facts": [
+       "F017"
+      ],
+      "sources": [
+       "config.yaml:11"
+      ],
+      "kinds": [
+       "config"
+      ],
+      "best_trust": 4
+     },
+     {
+      "value": 16,
+      "facts": [
+       "F046"
+      ],
+      "sources": [
+       "train.py:20"
+      ],
+      "kinds": [
+       "call"
+      ],
+      "best_trust": 3
+     }
+    ],
+    "runtime": false,
+    "hint": "a configuration file and a value fixed in code / notes disagree"
+   },
+   {
+    "canon": "weight_decay",
+    "scope": "train",
+    "values": [
+     {
+      "value": 0.01,
+      "facts": [
+       "F020"
+      ],
+      "sources": [
+       "config.yaml:14"
+      ],
+      "kinds": [
+       "config"
+      ],
+      "best_trust": 4
+     },
+     {
+      "value": 0.05,
+      "facts": [
+       "F045"
+      ],
+      "sources": [
+       "train.py:19"
+      ],
+      "kinds": [
+       "call"
+      ],
+      "best_trust": 3
+     }
+    ],
+    "runtime": false,
+    "hint": "a configuration file and a value fixed in code / notes disagree"
+   },
+   {
+    "canon": "dropout",
+    "scope": "train",
+    "values": [
+     {
+      "value": 0.2,
+      "facts": [
+       "F025"
+      ],
+      "sources": [
+       "config.yaml:21"
+      ],
+      "kinds": [
+       "config"
+      ],
+      "best_trust": 4
+     },
+     {
+      "value": 0.5,
+      "facts": [
+       "F050"
+      ],
+      "sources": [
+       "train.py:22"
+      ],
+      "kinds": [
+       "call"
+      ],
+      "best_trust": 3
+     }
+    ],
+    "runtime": false,
+    "hint": "a configuration file and a value fixed in code / notes disagree"
+   }
+  ],
+  "uncertainty": [
+   {
+    "kind": "extraction_is_textual",
+    "detail": "values are read from the files' text (config keys, argparse defaults, call keywords, log lines, prose): a value computed at run time, or set by an environment variable or a code path the files do not show, is not visible"
+   },
+   {
+    "kind": "open_conflicts",
+    "detail": "3 parameter(s) have conflicting values across sources; the text may not state them as settled"
+   }
+  ]
+ },
+ "files": [
+  "section.md",
+  "section.docx",
+  "section.tex",
+  "parameters.csv",
+  "parameters.md",
+  "datasets_environment.csv",
+  "commands.md",
+  "source_map.csv",
+  "source_map.json",
+  "questions.md",
+  "review_checklist.md"
+ ],
+ "_meta": {
+  "generator": "methods-ledger/mw.py 1.0.0",
+  "contract_fields": [],
+  "unfilled_fields": [],
+  "contract_found": false,
+  "files": [
+   "section.md",
+   "section.docx",
+   "section.tex",
+   "parameters.csv",
+   "parameters.md",
+   "datasets_environment.csv",
+   "commands.md",
+   "source_map.csv",
+   "source_map.json",
+   "questions.md",
+   "review_checklist.md"
+  ]
+ }
+}
